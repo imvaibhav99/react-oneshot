@@ -1,10 +1,18 @@
 import React from 'react'
-
+import Card from './components/Card'
+import Navbar from './components/Navbar'
 const App = () => {
   return (
     <div>
-      <h1>Hello, World!</h1>
+            <Navbar/>  
+      <div className='card'>
+        <h1>Hello, Vaibhav!</h1>
+      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit, culpa.</p>
+      </div>
+      <Card/>  
+   
     </div>
+    
   )
 }
 
