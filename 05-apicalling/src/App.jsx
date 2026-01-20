@@ -1,35 +1,40 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React, { useEffect, useState } from "react";
 
-function App() {
-  const [count, setCount] = useState(0)
+const App = () => {
+  const [users, setUsers] = useState([]);
+
+  const response = async () => {
+    try {
+      const res = await fetch("https://randomuser.me/api/?results=10");
+      const data = await res.json(); // data.results contains array of users
+
+      setUsers(data.results); // save data in state so JSX can use it
+    } catch (err) {
+      console.error("Error fetching users:", err);
+    }
+  };
+
+  useEffect(() => {
+    response();
+  },[]);
+  
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
-}
+    <div>
+      <ul>
+        {users.map((user) => {
+          return (
+            <li key={user.login.uuid}>
+              {user.name.first} {user.name.last} ,{user.email},{user.picture.thumbnail}
+            </li>
+         
+          );
+        })}
+      </ul>
 
-export default App
+      <button onClick={response}>Click</button>
+    </div>
+  );
+};
+
+export default App;
